@@ -1,0 +1,19 @@
+.card {
+  background-color: #0c1016;
+  font-family: 'Poppins', sans-serif;
+  color: #f1f1f1;
+}
+
+
+.logo {
+    border: #0c1016;
+    width: 100%;    
+    height: auto; 
+}
+
+#btnLogin {
+  padding: 8px 20px;  /* corrigido */
+  font-size: 15px;
+  margin: 10px auto;
+  display: block;
+}
