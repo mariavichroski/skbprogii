@@ -4,11 +4,16 @@
   color: #f1f1f1;
 }
 
-
 .logo {
     border: #0c1016;
-    width: 100%;    
+    width: 80%;    
     height: auto; 
+}
+
+body{
+  background-image: url("fundo.png");
+  background-size: cover;
+
 }
 
 #btnLogin {

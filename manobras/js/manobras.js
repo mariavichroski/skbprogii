@@ -1,10 +1,8 @@
 $(document).ready(function () {
-  // Ao fechar o modal, joga o foco para o botão que abre o modal
   $('#manobraModal').on('hide.bs.modal', function () {
     $('#btnAbrirModal').focus();
   });
 
-  // Código Bootstrap para validar forms .needs-validation
   (() => {
     'use strict'
 
@@ -16,7 +14,9 @@ $(document).ready(function () {
         event.stopPropagation()
 
         if (form.checkValidity()) {
-          // Se validou, fecha o modal, limpa campos e remove validação para próxima vez
+          const nome = $('#nomeManobra').val();
+          const nivel = $('#nivelDeManobra').val();
+
           const modalEl = document.getElementById('manobraModal');
           const myModal = bootstrap.Modal.getInstance(modalEl);
           myModal.hide();
@@ -25,13 +25,21 @@ $(document).ready(function () {
           $('#nivelDeManobra').val('');
           form.classList.remove('was-validated');
 
-          // Console log de sucesso
-          console.log('Manobra salva:', $('#nomeManobra').val(), $('#nivelDeManobra').val());
+          adicionarManobraNaTabela(nome, nivel);
         } else {
-          // Se invalidou, adiciona as classes para mostrar erro
           form.classList.add('was-validated');
         }
       }, false)
     })
   })();
 });
+
+function adicionarManobraNaTabela(nome, nivel) {
+  const tabela = document.getElementById('tabelaManobras');
+  const novaLinha = document.createElement('tr');
+  novaLinha.innerHTML = `
+    <td>${nome}</td>
+    <td>${nivel}</td>
+  `;
+  tabela.appendChild(novaLinha);
+}
