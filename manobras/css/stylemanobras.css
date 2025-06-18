@@ -3,8 +3,14 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.container {
+  margin-left: 0;  /* elimina margem esquerda, se existir */
+  margin-right: 0; /* elimina margem direita */
+}
+
+
 button,
-h1, h2, h3, h4, h5, h6,
+h1, h2, h3, h4, h6,
 table,
 label,
 input,
@@ -13,6 +19,14 @@ textarea {
   font-family: 'Poppins', sans-serif;
 }
 
+#Cabeçalho{
+  border: none;
+  height: 10px;
+  text-align:center;
+  background-color: #0c1016;
+  margin: 10px 0;
+  color: #ffffff !important;
+}
 
 #mensagem-erro {
   font-weight: bold;
@@ -21,7 +35,7 @@ textarea {
 .tabela-manobras {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
+  margin-top: 10px;
   background-color: #0c1016 !important;
   font-family: 'Poppins', sans-serif;
 }
@@ -40,6 +54,10 @@ textarea {
   background-color: #1a1f26;
   border: 1px solid #444;
   color: #ffffff;
+}
+
+.modal-footer{
+  justify-content: flex-start;
 }
 
 
