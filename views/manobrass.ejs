@@ -1,7 +1,11 @@
 <%- include('head') %>
+<link rel="stylesheet" href="manobras/css/stylemanobras.css">
+</head>
 <%- include('menu') %>
 
-<div class="container mt-4">
+<div class="container mt-3">
+  <div> <h5 id="Cabeçalho">Você está em Manobras</h5></div>
+  
   <button type="button" id="btnAbrirModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manobraModal">
       Crie uma manobra
     </button>
@@ -52,8 +56,8 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-success" id="btnSalvar">Salvar</button>
+            <button type="button" class="btn btn-secondary" id="bntCancelar" data-bs-dismiss="modal">Cancelar</button>
           </div>
         </form>
       </div>
