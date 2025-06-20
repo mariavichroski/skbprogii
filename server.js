@@ -8,8 +8,13 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.get('/', (req, res) => {
-    res.render('principal');
+    res.render('login');
 });
+
+app.get('/menu', (req, res) => {
+  res.render('menu'); 
+});
+
 
 app.get('/manobras', (req, res) => {
     res.render('manobrass', {
@@ -17,11 +22,28 @@ app.get('/manobras', (req, res) => {
   });
 });
 
+app.get('/usuarios', (req, res) => {
+    res.render('usuarios', {
+        });
+});
+
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', {
+        });
+});
+
+app.get('/eventos', (req, res) => {
+    res.render('eventos', {
+        });
+});
 // Servir arquivos estáticos das pastas com prefixo de rota
 app.use('/login', express.static(path.join(__dirname, 'login')));
 app.use('/main', express.static(path.join(__dirname, 'main')));
 app.use('/imagens', express.static(path.join(__dirname, 'imagens')));
 app.use('/manobras', express.static(path.join(__dirname, 'manobras')));
+app.use('/usuarios', express.static(path.join(__dirname, 'usuarios')));
+app.use('/dashboard', express.static(path.join(__dirname, 'dashboard')));
+app.use('/eventos', express.static(path.join(__dirname, 'eventos')));
 
 // Rota principal serve login.html
 //app.get('/', (req, res) => {

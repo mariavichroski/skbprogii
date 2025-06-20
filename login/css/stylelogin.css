@@ -6,8 +6,9 @@
 
 .logo {
     border: #0c1016;
-    width: 80%;    
+    width: 100%;    
     height: auto; 
+    display: block;
 }
 
 body{

@@ -16,7 +16,8 @@ $(document).ready(function () {
       };
   
       localStorage.setItem("usuario", JSON.stringify(usuario));
-      window.location.href = "index.html";
+      window.location.href = "/dashboard";
+
     });
   });
   

@@ -1,3 +1,6 @@
+console.log("script.js carregado com sucesso!");
+
+
 document.addEventListener('DOMContentLoaded', function() {
   var usuarioModal = new bootstrap.Modal(document.getElementById('usuarioModal'));
 
@@ -40,10 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
     alert("Cadastro realizado com sucesso!\nTipo: " + role);
 
     usuarioModal.hide();
+    document.getElementById('usuarioModal').addEventListener('hidden.bs.modal', function () {
     form.reset();
     form.classList.remove('was-validated');
-
-    // Depois de resetar o form, atualiza visibilidade da turma
     toggleTurma();
-  };
-});
+  }, { once: true });
+};})

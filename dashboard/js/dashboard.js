@@ -7,7 +7,7 @@ $(document).ready(function () {
   
     $('#btnLogout').click(function () {
       localStorage.removeItem("usuario");
-      window.location.href = "index.html";
+      window.location.href = "/";
     });
   
     // Simulação de dados

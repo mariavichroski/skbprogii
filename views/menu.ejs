@@ -1,6 +1,7 @@
+<%- include('head') %>
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/dashboard">
       <img class="logo" src="/login/css/logo.png" alt="Logo do site" />
     </a>
 
@@ -11,22 +12,28 @@
 
    <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Eventos</a></li>
-        <li class="nav-item"><a class="nav-link" href="/manobras" id="link-manobras">Manobras</a></li>
+        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="/eventos">Eventos</a></li>
+        <li class="nav-item"><a class="nav-link" href="/manobras" id="link-manobras">Manobras</a>
+        <li class="nav-item"><a class="nav-link" href="/usuarios" id="link-usuarios">Usuários</a></li>
+      </li>
       </ul>
 
       <form class="d-flex me-3" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-success" type="submit">Search</button>
       </form>
+    
 
        <div class="d-flex align-items-center text-white fw-bold">
         <span class="material-symbols-outlined me-2 user-icon">account_circle</span>
-        <span>João da Silva</span> <!-- ou substitua dinamicamente -->
-      </div>
+        <span>João da Silva</span>
+        </div>
+
+        <button id="btnLogout" class="btn btn-outline-light">Sair</button>
     </div>
   </div>
 </nav>
+
 
 

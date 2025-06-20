@@ -8,7 +8,6 @@ body {
   margin-right: 0; /* elimina margem direita */
 }
 
-
 button,
 h1, h2, h3, h4, h6,
 table,
@@ -57,7 +56,7 @@ textarea {
 }
 
 .modal-footer{
-  justify-content: flex-start;
+  justify-content: flex-start !important;
 }
 
 
