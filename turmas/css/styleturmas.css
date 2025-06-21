@@ -1,0 +1,62 @@
+body {
+  background-color: #0c1016;
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  margin-left: 0;  /* elimina margem esquerda, se existir */
+  margin-right: 0; /* elimina margem direita */
+}
+
+button,
+h1, h2, h3, h4, h6,
+table,
+label,
+input,
+select,
+textarea {
+  font-family: 'Poppins', sans-serif;
+}
+
+#Cabeçalho{
+  border: none;
+  height: 10px;
+  text-align:center;
+  background-color: #0c1016;
+  margin: 10px 0;
+  color: #ffffff !important;
+}
+
+#mensagem-erro {
+  font-weight: bold;
+}
+
+.tabela-turmas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #0c1016 !important;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tabela-turmas th,
+.tabela-turmas td {
+  border: 1px solid #2c3036;
+  padding: 12px 16px;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+input,
+select,
+textarea {
+  background-color: #1a1f26;
+  border: 1px solid #444;
+  color: #ffffff;
+}
+
+.modal-footer{
+  justify-content: flex-start !important;
+}
+
+

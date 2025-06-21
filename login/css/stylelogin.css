@@ -12,14 +12,27 @@
 }
 
 body{
-  background-image: url("fundo.png");
+  background-image: url("testebackground.png");
   background-size: cover;
+  background-attachment: fixed;
+  background-position: no-repeat;
 
+}
+
+.botoes-login {
+  display: flex;
+  justify-content: center; 
+  margin-top: 10px;
+}
+
+#btnLogin,
+#btnConta {
+  padding: 8px 20px;  
+  font-size: 15px;
+  display: inline-block;
 }
 
 #btnLogin {
-  padding: 8px 20px;  /* corrigido */
-  font-size: 15px;
-  margin: 10px auto;
-  display: block;
+  margin-right: 50px; /* aumenta espaço para o botão da direita */
 }
+

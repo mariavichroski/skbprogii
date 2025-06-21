@@ -36,6 +36,13 @@ app.get('/eventos', (req, res) => {
     res.render('eventos', {
         });
 });
+
+app.get('/turmas', (req, res) => {
+    res.render('turmas', {
+        });
+});
+
+
 // Servir arquivos estáticos das pastas com prefixo de rota
 app.use('/login', express.static(path.join(__dirname, 'login')));
 app.use('/main', express.static(path.join(__dirname, 'main')));
@@ -44,6 +51,7 @@ app.use('/manobras', express.static(path.join(__dirname, 'manobras')));
 app.use('/usuarios', express.static(path.join(__dirname, 'usuarios')));
 app.use('/dashboard', express.static(path.join(__dirname, 'dashboard')));
 app.use('/eventos', express.static(path.join(__dirname, 'eventos')));
+app.use('/turmas', express.static(path.join(__dirname, 'turmas')));
 
 // Rota principal serve login.html
 //app.get('/', (req, res) => {
