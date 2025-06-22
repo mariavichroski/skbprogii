@@ -15,6 +15,7 @@ Estrutura geral do projeto:
 - Desempenho/Ranking.
 
 Instruções de uso/instalação:
-- Instalar Node.js: node install, npm install
+1. No terminal:
+- Instalar Node.js: nodemon install, npm install, yarn install
 - Instalar o EJS com o seguinte comando: npm install ejs
-- Com isso em mãos, já se pode iniciar o servidor.
+- Com isso em mãos, já se pode iniciar o servidor: node server.js

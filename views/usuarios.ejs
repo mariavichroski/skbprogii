@@ -45,19 +45,24 @@
 
             </div>
 
-            <div class ="row">
-              <div class="col-12 mb-2">
-                <label for="email">E-mail:</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+            <div class ="row aluno-container" id="alunoContainer">
+              <div class="col-2 mb-1">
+                <label for="idade">Idade:</label>
+                <input type="idade" class="form-control" id="idade" required>
                 <div class="invalid-feedback">
                   Campo obrigatório.
                 </div>
               </div>
-            </div>
-
-            <div class="mb-2 turma-container">
-                <label for="class" class="form-label">Turma:</label>
-                  <select class="form-control" id="class" required>
+              <div class="col-3 mb-2">
+                <label for="base">Base:</label>
+                <input type="base" class="form-control" id="base" required>
+                <div class="invalid-feedback">
+                  Campo obrigatório.
+                </div>
+              </div>
+              <div class="col-7 mb-2">
+                <label for="turma">Turma:</label>
+                  <select class="form-control" id="turma" required>
                     <option selected>Choose...</option>
                     <option value="1">T1</option>
                     <option value="2">T2</option>
@@ -67,7 +72,28 @@
                     Campo obrigatório.
                   </div>
               </div>
-        
+            </div>
+
+
+
+            <div class ="row">
+              <div class="col-12 mb-2">
+                <label for="email">E-mail:</label>
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                <div class="invalid-feedback">
+                  Campo obrigatório.
+                </div>
+              </div>
+            </div>
+            <div class ="row">
+              <div class="col-12 mb-2">
+                <label for="senha">Senha:</label>
+                <input type="password" class="form-control" id="senha" required>
+                <div class="invalid-feedback">
+                  Campo obrigatório.
+                </div>
+              </div>
+            </div>
 
             <div id="mensagem-erro" class="mt-3 text-danger text-center"></div>
           </div>
