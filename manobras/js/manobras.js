@@ -1,8 +1,11 @@
 $(document).ready(function () {
+  // Fecha modal e retorna foco
   $('#manobraModal').on('hide.bs.modal', function () {
     $('#btnAbrirModal').focus();
+    $('#manobraModal').removeData('editarId');
   });
 
+  // Validação e envio do formulário
   (() => {
     'use strict'
 
@@ -16,30 +19,110 @@ $(document).ready(function () {
         if (form.checkValidity()) {
           const nome = $('#nomeManobra').val();
           const nivel = $('#nivelDeManobra').val();
+          const idEditar = $('#manobraModal').data('editarId');
 
-          const modalEl = document.getElementById('manobraModal');
-          const myModal = bootstrap.Modal.getInstance(modalEl);
-          myModal.hide();
+          const ajaxConfig = {
+            url: idEditar ? `/manobras/edit/${idEditar}` : '/manobras/create',
+            method: idEditar ? 'PUT' : 'POST',
+            data: { nome: nome, nivel: nivel },
+            success: function () {
+              const modalEl = document.getElementById('manobraModal');
+              const myModal = bootstrap.Modal.getInstance(modalEl);
+              myModal.hide();
 
-          $('#nomeManobra').val('');
-          $('#nivelDeManobra').val('');
-          form.classList.remove('was-validated');
+              $('#nomeManobra').val('');
+              $('#nivelDeManobra').val('');
+              form.classList.remove('was-validated');
+              $('#manobraModal').removeData('editarId');
 
-          adicionarManobraNaTabela(nome, nivel);
+              carregarManobras();
+            },
+            error: function () {
+              alert('Erro ao salvar manobra.');
+            }
+          };
+
+          $.ajax(ajaxConfig);
         } else {
           form.classList.add('was-validated');
         }
       }, false)
-    })
+    });
   })();
-});
 
-function adicionarManobraNaTabela(nome, nivel) {
-  const tabela = document.getElementById('tabelaManobras');
-  const novaLinha = document.createElement('tr');
-  novaLinha.innerHTML = `
-    <td>${nome}</td>
-    <td>${nivel}</td>
-  `;
-  tabela.appendChild(novaLinha);
-}
+  // Filtro por coluna
+  $('.filtro-coluna').on('input', function () {
+    const filtros = [];
+    
+    $('.filtro-coluna').each(function () {
+      filtros.push($(this).val().toLowerCase());
+    });
+
+    $('#tabelaManobras tr').each(function () {
+      let mostrar = true;
+      $(this).find('td').each(function (index) {
+        const valor = $(this).text().toLowerCase();
+        if (filtros[index] && !valor.includes(filtros[index])) {
+          mostrar = false;
+        }
+      });
+      $(this).toggle(mostrar);
+    });
+  });
+
+  // Editar manobra
+  $('#tabelaManobras').on('click', '.editar', function () {
+    const linha = $(this).closest('tr');
+    const id = linha.data('id');
+    const nome = linha.find('td:eq(0)').text();
+    const nivel = linha.find('td:eq(1)').text();
+
+    $('#nomeManobra').val(nome);
+    $('#nivelDeManobra').val(nivel);
+    $('#manobraModal').data('editarId', id);
+
+    const modalEl = new bootstrap.Modal(document.getElementById('manobraModal'));
+    modalEl.show();
+  });
+
+  // Deletar manobra
+  $('#tabelaManobras').on('click', '.deletar', function () {
+    const linha = $(this).closest('tr');
+    const id = linha.data('id');
+
+    if (confirm('Tem certeza que deseja excluir esta manobra?')) {
+      $.ajax({
+        url: `/manobras/delete/${id}`,
+        method: 'DELETE',
+        success: function () {
+          carregarManobras();
+        },
+        error: function () {
+          alert('Erro ao deletar.');
+        }
+      });
+    }
+  });
+
+  // Carrega manobras da API e preenche tabela
+  function carregarManobras() {
+    $.get('/manobras/get/', function (data) {
+      const tabela = $('#tabelaManobras');
+      tabela.empty();
+      data.forEach(function (manobra) {
+        tabela.append(`
+          <tr data-id="${manobra.id}">
+            <td>
+              <button class="btn btn-warning btn-sm editar">Editar</button>
+              <button class="btn btn-danger btn-sm deletar">Excluir</button>
+            </td>
+            <td>${manobra.nome}</td>
+            <td>${manobra.nivel}</td>
+          </tr>
+        `);
+      });
+    });
+  }
+
+  carregarManobras(); // Inicial
+});

@@ -5,11 +5,7 @@ $(document).ready(function () {
       window.location.href = "index.html";
     }
   
-    $('#btnLogout').click(function () {
-      localStorage.removeItem("usuario");
-      window.location.href = "/";
-    });
-  
+
     // Simulação de dados
     const alunos = [{ nome: 'Maria'}, {nome:"Joao"}, {nome: "carlos"}]; // 3 alunos
     const manobras = [{nome: 'Ollie'}, {nome:'Flip'}, {nome: 'Heelflip'}, {nome:'Frontside Ollie'}]; // 4 manobras

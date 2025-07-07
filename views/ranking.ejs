@@ -1,0 +1,67 @@
+<%- include('head') %>
+<link rel="stylesheet" href="/ranking/css/styledesempenho.css">
+</head>
+<%- include('menu') %>
+
+<body>
+  <div class="container mt-4">
+    <h5>Cadastro de Desempenho</h5>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#desempenhoModal">
+      Registrar manobra aprendida
+    </button>
+  </div>
+
+  <table class="tabelaDesempenho">
+    <thead>
+      <tr>
+        <th>Aluno</th>
+        <th>Manobra</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaDesempenho">
+      <!-- Desempenhos vão aparecer aqui -->
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="desempenhoModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form class="needs-validation" id="formDesempenho" novalidate>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Novo Desempenho</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="alunoSelect">Aluno:</label>
+              <select class="form-control" id="alunoSelect" required>
+                <!-- Alunos serão carregados via JS -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="manobraSelect">Manobra:</label>
+              <select class="form-control" id="manobraSelect" required>
+                <!-- Manobras serão carregadas via JS -->
+              </select>
+            </div>
+            <div id="mensagemErro" class="text-danger text-center"></div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/ranking/js/desempenho.js"></script>
+  <script src="/main/js/index.js"></script>
+</body>
+</html>

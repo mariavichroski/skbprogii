@@ -31,7 +31,7 @@ textarea {
   font-weight: bold;
 }
 
-.tabela-manobras {
+.tabelaDesempenho {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -39,8 +39,8 @@ textarea {
   font-family: 'Poppins', sans-serif;
 }
 
-.tabela-manobras th,
-.tabela-manobras td {
+.tabelaDesempenho th,
+.tabelaDesempenho td {
   border: 1px solid #2c3036;
   padding: 12px 16px;
   text-align: left;
@@ -59,7 +59,7 @@ textarea {
   justify-content: flex-start !important;
 }
 
-.tabela-manobras thead input {
+.tabelaDesempenho thead input {
   width: 100%;
   padding: 4px 8px;
   margin-top: 4px;
@@ -70,7 +70,7 @@ textarea {
   border-radius: 4px;
 }
 
-.tabela-manobras thead th {
+.tabelaDesempenho thead th {
   vertical-align: bottom;
   color: #ffffff;
   font-weight: bold;

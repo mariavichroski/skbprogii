@@ -1,5 +1,5 @@
 <%- include('head') %>
-<link rel="stylesheet" href="manobras/css/stylemanobras.css">
+<link rel="stylesheet" href="/manobras/css/stylemanobras.css">
 </head>
 <%- include('menu') %>
 
@@ -9,12 +9,19 @@
   <button type="button" id="btnAbrirModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manobraModal">
       Crie uma manobra
     </button>
+
   </div>
       <table class="tabela-manobras">
         <thead>
           <tr>
+            <th>Ações</th>
             <th>Nome da Manobra</th>
             <th>Nível</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th><input type="text" class="form-control form-control-sm filtro-coluna" placeholder="Filtrar nome..." /></th>
+            <th><input type="text" class="form-control form-control-sm filtro-coluna" placeholder="Filtrar nível..." /></th>
           </tr>
         </thead>
         <tbody id="tabelaManobras">
