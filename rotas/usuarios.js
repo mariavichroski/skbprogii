@@ -7,7 +7,7 @@ const usuarios = [{
     sobrenome: 'Silva',
     isInstrutor: false,
     idade: 15,
-    base: 'SP',
+    base: 'Regular',
     turma: 'T1',
     email: 'joao.silva@example.com',
     senha: '123456'
@@ -29,7 +29,7 @@ const usuarios = [{
     sobrenome: 'Pereira',
     isInstrutor: false,
     idade: 17,
-    base: 'RJ',
+    base: 'Goofy',
     turma: 'T2',
     email: 'carlos.pereira@example.com',
     senha: 'abc123'
@@ -40,11 +40,11 @@ const usuarios = [{
     sobrenome: 'Souza',
     isInstrutor: false,
     idade: 14,
-    base: 'MG',
+    base: 'Regular',
     turma: 'T3',
     email: 'ana.souza@example.com',
     senha: 'senha321'
-  }]; // Simulação de banco na memória
+  }]; 
 
 router.get('/', (req, res) => {
   res.render('usuarios', {
@@ -101,7 +101,7 @@ router.put('/edit/:id', (req, res) => {
   usuario.email = email;
   usuario.senha = senha;
 
-  res.json({ mensagem: 'Usuário editado com sucesso', usuario });
+  res.json({ mensagem: 'Usuário alterado com sucesso', usuario });
 });
 
 // Deletar usuário

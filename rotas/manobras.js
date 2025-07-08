@@ -45,7 +45,7 @@ router.put('/edit/:id', (req, res) => {
   manobra.nome = nome;
   manobra.nivel = nivel;
 
-  res.json({ mensagem: 'Manobra editada com sucesso', manobra });
+  res.json({ mensagem: 'Manobra alterada com sucesso', manobra });
 });
 
 // Deletar manobra

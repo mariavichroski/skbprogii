@@ -40,7 +40,7 @@ router.put('/edit/:id', (req, res) => {
   evento.premios = premios;
   evento.data = data;
 
-  res.json({ mensagem: 'Evento editado com sucesso', evento });
+  res.json({ mensagem: 'Evento alterado com sucesso', evento });
 });
 
 // Deletar evento

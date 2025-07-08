@@ -1,5 +1,4 @@
  $(document).ready(function () {
-  // Limpar campos e editarId ao abrir modal para novo cadastro
   $('#btnAbrirModal').on('click', function() {
     $('#nomeManobra').val('');
     $('#nivelDeManobra').val('');
@@ -12,8 +11,7 @@
     $('#manobraModal').removeData('editarId');
   });
 
-  // ... o resto do seu código permanece igual ...
-
+  
   // Validação e envio do formulário
   (() => {
     'use strict'

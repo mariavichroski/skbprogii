@@ -65,7 +65,6 @@ $('.filtro-coluna').on('input', function () {
     $(this).find('td').each(function (index) {
       const valor = $(this).text().toLowerCase();
 
-      // Pula a coluna 0 (botões)
       const colunaReal = index - 1;
 
       if (colunaReal >= 0 && filtros[colunaReal] && !valor.includes(filtros[colunaReal])) {
@@ -75,8 +74,6 @@ $('.filtro-coluna').on('input', function () {
     $(this).toggle(mostrar);
   });
 });
-
-
 
   // Editar evento
   $('#tabelaEventos').on('click', '.editar', function () {

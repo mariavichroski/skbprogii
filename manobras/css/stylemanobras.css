@@ -71,7 +71,7 @@ textarea {
 }
 
 .tabela-manobras thead input::placeholder {
-  color: #ccc; /* cor do placeholder, se quiser */
+  color: #ccc; 
 }
 
 .tabela-manobras thead th {

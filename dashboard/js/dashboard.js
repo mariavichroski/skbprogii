@@ -16,7 +16,6 @@ $(document).ready(function () {
     // Map de pontos por nível
     const pontosPorNivel = { 'Fácil': 5, 'Médio': 7, 'Avançado': 10 };
 
-    // Map de usuário_id → pontos acumulados
     const pontuacaoUsuarios = {};
 
     // Para cada desempenho (aluno + manobra)
