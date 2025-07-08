@@ -3,17 +3,28 @@
 </head>
 <%- include('menu') %>
 <body>
+<div class="container">
+  <div> <h5 id="Cabeçalho">Você está em Eventos</h5></div>
+  
   <div class="container mt-4">
     <button type="button" id="btnAbrirModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventoModal">
       Crie um evento
     </button>
    </div>
+  </div>
           <table class="tabela-eventos">
         <thead>
           <tr>
+            <th>Ações</th>
             <th>Descrição</th>
             <th>Prêmios</th>
             <th>Data</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th><input type="text" class="form-control form-control-sm filtro-coluna" placeholder="Filtrar descrição..." /></th>
+            <th><input type="text" class="form-control form-control-sm filtro-coluna" placeholder="Filtrar prêmios..." /></th>
+            <th><input type="text" class="form-control form-control-sm filtro-coluna" placeholder="Filtrar data..." /></th>
           </tr>
         </thead>
         <tbody id="tabelaEventos">

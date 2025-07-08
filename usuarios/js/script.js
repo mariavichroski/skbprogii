@@ -1,69 +1,175 @@
-console.log("script.js carregado com sucesso!");
-
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function () {
   var usuarioModal = new bootstrap.Modal(document.getElementById('usuarioModal'));
 
   // Elementos do formulário
-  var alunoDiv = document.getElementById('alunoContainer');
-  var isInstrutorCheckbox = document.getElementById('isInstrutor');
-  var idadeInput = document.getElementById('idade');
-  var baseInput = document.getElementById('base');
-  var turmaSelect = document.getElementById('turma');
-  var form = document.getElementById('registrationForm');
+  var alunoDiv = $('#alunoContainer');
+  var isInstrutorCheckbox = $('#isInstrutor');
+  var idadeInput = $('#idade');
+  var baseInput = $('#base');
+  var turmaSelect = $('#turma');
+  var form = $('#registrationForm');
 
-  // Função para mostrar ou ocultar campos de aluno
+  // Limpar modal para novo usuário
+  $('#btnAbrirModal').on('click', function () {
+    form[0].reset();
+    form.removeClass('was-validated');
+    $('#usuarioModal').removeData('editarId');
+    toggleAluno();
+  });
+
+  // Mostrar/ocultar campos aluno
   function toggleAluno() {
-    const isInstrutor = isInstrutorCheckbox.checked;
-
-    if (isInstrutor) {
-      alunoDiv.style.display = 'none';
-      idadeInput.required = false;
-      baseInput.required = false;
-      turmaSelect.required = false;
-
-      idadeInput.value = '';
-      baseInput.value = '';
-      turmaSelect.value = 'Choose...';
+    if (isInstrutorCheckbox.is(':checked')) {
+      alunoDiv.hide();
+      idadeInput.prop('required', false).val('');
+      baseInput.prop('required', false).val('');
+      turmaSelect.prop('required', false).val('Choose...');
     } else {
-      alunoDiv.style.display = 'flex'; // ou 'block', dependendo do seu layout
-      idadeInput.required = true;
-      baseInput.required = true;
-      turmaSelect.required = true;
+      alunoDiv.show();
+      idadeInput.prop('required', true);
+      baseInput.prop('required', true);
+      turmaSelect.prop('required', true);
     }
   }
-
-  // Estado inicial ao carregar a página
   toggleAluno();
 
-  // Atualiza ao clicar no checkbox
-  isInstrutorCheckbox.addEventListener('change', toggleAluno);
+  isInstrutorCheckbox.on('change', toggleAluno);
 
-  // Abre o modal
-  document.getElementById('btnAbrirModal').onclick = function() {
-    usuarioModal.show();
-  };
+  // Carregar usuários da API e preencher tabela
+  function carregarUsuarios() {
+    $.get('/usuarios/get', function (data) {
+      const tabela = $('#tabelaUsuarios');
+      tabela.empty();
+      data.forEach(function (usuario) {
+        tabela.append(`
+          <tr data-id="${usuario.id}">
+            <td>
+              <button class="btn btn-warning btn-sm editar">Editar</button>
+              <button class="btn btn-danger btn-sm deletar">Excluir</button>
+            </td>
+            <td>${usuario.nome}</td>
+            <td>${usuario.sobrenome}</td>
+            <td>${usuario.isInstrutor ? 'Instrutor' : 'Aluno'}</td>
+            <td>${usuario.isInstrutor ? '-' : usuario.idade}</td>
+            <td>${usuario.isInstrutor ? '-' : usuario.base}</td>
+            <td>${usuario.isInstrutor ? '-' : usuario.turma}</td>
+            <td>${usuario.email}</td>
+          </tr>
+        `);
+      });
+    });
+  }
+  carregarUsuarios();
 
-  // Tratamento de envio do formulário
-  form.onsubmit = function(event) {
+  // Submissão do formulário (create/edit)
+  form.on('submit', function (event) {
     event.preventDefault();
+    event.stopPropagation();
 
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
+    if (!form[0].checkValidity()) {
+      form.addClass('was-validated');
       return;
     }
 
-    var isInstrutor = isInstrutorCheckbox.checked;
-    var role = isInstrutor ? "Instrutor" : "Aluno";
+    var idEditar = $('#usuarioModal').data('editarId');
 
-    alert("Cadastro realizado com sucesso!\nTipo: " + role);
+    var data = {
+      nome: $('#name').val(),
+      sobrenome: $('#sobrenome').val(),
+      isInstrutor: isInstrutorCheckbox.is(':checked'),
+      idade: $('#idade').val(),
+      base: $('#base').val(),
+      turma: $('#turma').val(),
+      email: $('#email').val(),
+      senha: $('#senha').val(),
+    };
 
-    usuarioModal.hide();
+    var url = idEditar ? `/usuarios/edit/${idEditar}` : '/usuarios/create';
+    var method = idEditar ? 'PUT' : 'POST';
 
-    // Resetar formulário ao fechar modal
-    document.getElementById('usuarioModal').addEventListener('hidden.bs.modal', function () {
-      form.reset();
-      form.classList.remove('was-validated');
-      toggleAluno(); // Garante que a interface reflita o novo estado do checkbox
-    }, { once: true });
-  };
+    $.ajax({
+      url: url,
+      method: method,
+      data: data,
+      success: function () {
+        usuarioModal.hide();
+        form.removeClass('was-validated');
+        $('#usuarioModal').removeData('editarId');
+        carregarUsuarios();
+      },
+      error: function () {
+        alert('Erro ao salvar usuário.');
+      }
+    });
+  });
+
+  // Editar usuário - preenche o modal
+  $('#tabelaUsuarios').on('click', '.editar', function () {
+    var linha = $(this).closest('tr');
+    var id = linha.data('id');
+
+    $.get('/usuarios/get', function (data) {
+      var usuario = data.find(u => u.id === id);
+      if (!usuario) return alert('Usuário não encontrado');
+
+      $('#name').val(usuario.nome);
+      $('#sobrenome').val(usuario.sobrenome);
+      $('#isInstrutor').prop('checked', usuario.isInstrutor);
+      $('#idade').val(usuario.idade);
+      $('#base').val(usuario.base);
+      $('#turma').val(usuario.turma);
+      $('#email').val(usuario.email);
+      $('#senha').val(usuario.senha);
+
+      toggleAluno();
+
+      $('#usuarioModal').data('editarId', id);
+      usuarioModal.show();
+    });
+  });
+
+  // Deletar usuário
+  $('#tabelaUsuarios').on('click', '.deletar', function () {
+    var linha = $(this).closest('tr');
+    var id = linha.data('id');
+
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      $.ajax({
+        url: `/usuarios/delete/${id}`,
+        method: 'DELETE',
+        success: function () {
+          carregarUsuarios();
+        },
+        error: function () {
+          alert('Erro ao deletar usuário.');
+        }
+      });
+    }
+  });
+
+  // Filtro por coluna
+  $('.filtro-coluna').on('input', function () {
+    const filtros = [];
+    
+    $('.filtro-coluna').each(function () {
+      filtros.push($(this).val().toLowerCase());
+    });
+
+    $('#tabelaUsuarios tr').each(function () {
+      let mostrar = true;
+      $(this).find('td').each(function (index) {
+        // ignorar coluna ações (index 0)
+        if (index === 0) return true;
+
+        const valor = $(this).text().toLowerCase();
+        const colunaReal = index - 1; 
+
+        if (filtros[colunaReal] && !valor.includes(filtros[colunaReal])) {
+          mostrar = false;
+        }
+      });
+      $(this).toggle(mostrar);
+    });
+  });
+
 });

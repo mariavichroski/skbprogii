@@ -3,10 +3,80 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.container {
+  margin-left: 0;  /* elimina margem esquerda, se existir */
+  margin-right: 0; /* elimina margem direita */
+}
+
+button,
+h1, h2, h3, h4, h6,
+table,
+label,
+input,
+select,
+textarea {
+  font-family: 'Poppins', sans-serif;
+}
+
+#Cabeçalho{
+  border: none;
+  height: 10px;
+  text-align:center;
+  background-color: #0c1016;
+  margin: 10px 0;
+  color: #ffffff !important;
+}
+
 #mensagem-erro {
   font-weight: bold;
+}
+
+.tabela-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #0c1016 !important;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tabela-usuarios th,
+.tabela-usuarios td {
+  border: 1px solid #2c3036;
+  padding: 12px 16px;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+input,
+select,
+textarea {
+  background-color: #1a1f26;
+  border: 1px solid #444;
+  color: #ffffff;
 }
 
 .modal-footer{
   justify-content: flex-start !important;
 }
+
+.tabela-usuarios thead input {
+  width: 100%;
+  padding: 4px 8px;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  background-color: #1a1f26 !important;
+  color: #ffff !important;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.tabela-usuarios thead input::placeholder {
+  color: #ccc; 
+}
+
+.tabela-usuarios thead th {
+  vertical-align: bottom;
+  color: #ffffff;
+  font-weight: bold;
+}
+

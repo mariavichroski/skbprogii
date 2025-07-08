@@ -1,9 +1,18 @@
-$(document).ready(function () {
+ $(document).ready(function () {
+  // Limpar campos e editarId ao abrir modal para novo cadastro
+  $('#btnAbrirModal').on('click', function() {
+    $('#nomeManobra').val('');
+    $('#nivelDeManobra').val('');
+    $('#manobraModal').removeData('editarId');
+  });
+
   // Fecha modal e retorna foco
   $('#manobraModal').on('hide.bs.modal', function () {
     $('#btnAbrirModal').focus();
     $('#manobraModal').removeData('editarId');
   });
+
+  // ... o resto do seu código permanece igual ...
 
   // Validação e envio do formulário
   (() => {
@@ -62,7 +71,9 @@ $(document).ready(function () {
       let mostrar = true;
       $(this).find('td').each(function (index) {
         const valor = $(this).text().toLowerCase();
-        if (filtros[index] && !valor.includes(filtros[index])) {
+        const colunaReal = index - 1; // remover a coluna de ações
+        
+        if (colunaReal >= 0 && filtros[colunaReal] && !valor.includes(filtros[colunaReal])) {
           mostrar = false;
         }
       });
@@ -74,8 +85,8 @@ $(document).ready(function () {
   $('#tabelaManobras').on('click', '.editar', function () {
     const linha = $(this).closest('tr');
     const id = linha.data('id');
-    const nome = linha.find('td:eq(0)').text();
-    const nivel = linha.find('td:eq(1)').text();
+    const nome = linha.find('td:eq(1)').text();
+    const nivel = linha.find('td:eq(2)').text();
 
     $('#nomeManobra').val(nome);
     $('#nivelDeManobra').val(nivel);

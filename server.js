@@ -23,9 +23,15 @@ app.use(
 
 //Importa rotas
 const manobrasRotas = require('./rotas/manobras');
+const eventosRotas = require('./rotas/eventos');
+const usuariosRotas = require('./rotas/usuarios');
+const desempenhoRotas = require('./rotas/desempenho');
 
 //Usa as rotas
 app.use('/manobras', manobrasRotas); 
+app.use('/eventos', eventosRotas);
+app.use('/usuarios', usuariosRotas);
+app.use('/ranking', desempenhoRotas);
 
 app.get('/', (req, res) => {
     res.render('login');

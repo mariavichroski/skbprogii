@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const manobras= [];
+const manobras= [
+  { id: 1, nome: 'Ollie', nivel: 'Fácil' },
+  { id: 2, nome: 'Shove-it', nivel: 'Médio' },
+  { id: 3, nome: 'Kickflip', nivel: 'Avançado' },
+  { id: 4, nome: 'Heelflip', nivel: 'Avançado' },
+  { id: 5, nome: 'Pop Shove-it', nivel: 'Médio' },
+  { id: 6, nome: 'Manual', nivel: 'Fácil' }
+];
 
 router.get('/', (req, res) => {
     res.render('manobras', {

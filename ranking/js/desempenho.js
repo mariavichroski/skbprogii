@@ -1,76 +1,129 @@
-// Dados mockados (simulam o backend)
-const alunos = [
-  { id: 1, nome: 'João' },
-  { id: 2, nome: 'Maria' },
-  { id: 3, nome: 'Carlos' }
-];
+// Variáveis globais para armazenar dados carregados do backend
+let alunos = [];
+let manobras = [];
+let desempenhos = [];
 
-const manobras = [
-  { id: 1, nome: 'Ollie', nivel: 'Fácil' },
-  { id: 2, nome: 'Shove-it', nivel: 'Médio' },
-  { id: 3, nome: 'Kickflip', nivel: 'Avançado' }
-];
+// Função para carregar alunos do backend
+function carregarAlunos() {
+  return $.get('/usuarios/get').then(data => {
+    // Filtra só os alunos (não instrutores)
+    alunos = data.filter(u => !u.isInstrutor);
+  });
+}
 
-let desempenhos = []; // Aqui serão salvos os dados inseridos
+// Função para carregar manobras do backend
+function carregarManobras() {
+  return $.get('/manobras/get').then(data => {
+    manobras = data;
+  });
+}
 
-// Preencher selects
+// Função para carregar desempenhos do backend
+function carregarDesempenhos() {
+  return $.get('/ranking/get').then(data => {
+    desempenhos = data;
+  });
+}
+
+// Preencher selects de alunos e manobras
 function preencherSelects() {
-  const alunoSelect = document.getElementById('alunoSelect');
-  const manobraSelect = document.getElementById('manobraSelect');
+  const alunoSelect = $('#alunoSelect').empty().append('<option value="">Selecione um aluno</option>');
+  const manobraSelect = $('#manobraSelect').empty().append('<option value="">Selecione uma manobra</option>');
 
   alunos.forEach(aluno => {
-    const opt = document.createElement('option');
-    opt.value = aluno.id;
-    opt.textContent = aluno.nome;
-    alunoSelect.appendChild(opt);
+    alunoSelect.append(`<option value="${aluno.id}">${aluno.nome} ${aluno.sobrenome}</option>`);
   });
 
   manobras.forEach(manobra => {
-    const opt = document.createElement('option');
-    opt.value = manobra.id;
-    opt.textContent = `${manobra.nome} (${manobra.nivel})`;
-    manobraSelect.appendChild(opt);
+    manobraSelect.append(`<option value="${manobra.id}">${manobra.nome} (${manobra.nivel})</option>`);
   });
 }
 
 // Exibir desempenhos na tabela
 function renderizarTabela() {
-  const tabela = document.getElementById('tabelaDesempenho');
-  tabela.innerHTML = '';
+  const tabela = $('#tabelaDesempenho').empty();
+
   desempenhos.forEach(item => {
     const aluno = alunos.find(a => a.id === item.aluno_id);
     const manobra = manobras.find(m => m.id === item.manobra_id);
 
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${aluno?.nome}</td><td>${manobra?.nome} (${manobra?.nivel})</td>`;
-    tabela.appendChild(row);
+    if (aluno && manobra) {
+      const row = `
+        <tr data-id="${item.id}">
+          <td>
+            <button class="btn btn-danger btn-sm btn-excluir" data-id="${item.id}">Excluir</button>
+          </td>
+          <td>${aluno.nome} ${aluno.sobrenome}</td>
+          <td>${manobra.nome} (${manobra.nivel})</td>
+        </tr>
+      `;
+      tabela.append(row);
+    }
   });
 }
 
 // Submeter novo desempenho
-document.getElementById('formDesempenho').addEventListener('submit', function (e) {
+$('#formDesempenho').on('submit', function(e) {
   e.preventDefault();
 
-  const alunoId = parseInt(document.getElementById('alunoSelect').value);
-  const manobraId = parseInt(document.getElementById('manobraSelect').value);
+  const alunoId = parseInt($('#alunoSelect').val());
+  const manobraId = parseInt($('#manobraSelect').val());
 
-  // Validação simples (sem repetições)
-  const jaExiste = desempenhos.some(d => d.aluno_id === alunoId && d.manobra_id === manobraId);
-  if (jaExiste) {
-    document.getElementById('mensagemErro').textContent = 'Esse desempenho já foi registrado.';
+  if (!alunoId || !manobraId) {
+    $('#mensagemErro').text('Por favor, selecione aluno e manobra.');
     return;
   }
 
-  desempenhos.push({ aluno_id: alunoId, manobra_id: manobraId });
-  renderizarTabela();
+  // Verifica se já existe para evitar duplicidade
+  const jaExiste = desempenhos.some(d => d.aluno_id === alunoId && d.manobra_id === manobraId);
+  if (jaExiste) {
+    $('#mensagemErro').text('Esse desempenho já foi registrado.');
+    return;
+  }
 
-  document.getElementById('mensagemErro').textContent = '';
-  document.getElementById('formDesempenho').reset();
-  bootstrap.Modal.getInstance(document.getElementById('desempenhoModal')).hide();
+  $.ajax({
+    url: '/ranking/create',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ aluno_id: alunoId, manobra_id: manobraId }),
+    success: function(res) {
+      desempenhos.push(res.desempenho);
+      renderizarTabela();
+      $('#mensagemErro').text('');
+      $('#formDesempenho')[0].reset();
+      bootstrap.Modal.getInstance($('#desempenhoModal')[0]).hide();
+    },
+    error: function(xhr) {
+      $('#mensagemErro').text(xhr.responseJSON?.erro || 'Erro ao salvar desempenho');
+    }
+  });
+});
+
+// Deletar desempenho ao clicar no botão excluir
+$('#tabelaDesempenho').on('click', '.btn-excluir', function() {
+  const id = $(this).data('id');
+
+  $.ajax({
+    url: `/ranking/delete/${id}`,
+    method: 'DELETE',
+    success: function(res) {
+      desempenhos = desempenhos.filter(d => d.id !== id);
+      renderizarTabela();
+    },
+    error: function() {
+      alert('Erro ao excluir desempenho');
+    }
+  });
 });
 
 // Inicializar
-document.addEventListener('DOMContentLoaded', () => {
-  preencherSelects();
-  renderizarTabela();
+$(document).ready(function() {
+  $.when(carregarAlunos(), carregarManobras(), carregarDesempenhos())
+    .done(function() {
+      preencherSelects();
+      renderizarTabela();
+    })
+    .fail(function() {
+      alert('Erro ao carregar dados do backend');
+    });
 });

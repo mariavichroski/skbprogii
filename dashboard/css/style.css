@@ -8,5 +8,11 @@ img{
   height: 147px;
 }
 
-
+#Cabeçalho{
+  height: 10px;
+  text-align:center;
+  background-color: #0c1016;
+  margin: 10px 10px 30px 10px;
+  color: #ffffff !important;
+}
 

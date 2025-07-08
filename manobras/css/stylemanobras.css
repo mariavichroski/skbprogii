@@ -64,10 +64,14 @@ textarea {
   padding: 4px 8px;
   margin-top: 4px;
   font-size: 0.9rem;
-  background-color: #1a1f26;
-  color: #fff;
+  background-color: #1a1f26 !important;
+  color: #ffff !important;
   border: 1px solid #444;
   border-radius: 4px;
+}
+
+.tabela-manobras thead input::placeholder {
+  color: #ccc; /* cor do placeholder, se quiser */
 }
 
 .tabela-manobras thead th {

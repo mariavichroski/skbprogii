@@ -3,6 +3,11 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.container {
+  margin-left: 0;  /* elimina margem esquerda, se existir */
+  margin-right: 0; /* elimina margem direita */
+}
+
 #mensagem-erro {
   font-weight: bold;
 }
@@ -11,6 +16,14 @@ body {
   justify-content: flex-start !important;
 }
 
+#Cabeçalho{
+  border: none;
+  height: 10px;
+  text-align:center;
+  background-color: #0c1016;
+  margin: 10px 0;
+  color: #ffffff !important;
+}
 
 .tabela-eventos {
   width: 100%;
@@ -26,4 +39,25 @@ body {
   padding: 12px 16px;
   text-align: left;
   color: #ffffff !important;
+}
+
+.tabela-eventos thead input {
+  width: 100%;
+  padding: 4px 8px;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  background-color: #1a1f26 !important;
+  color: #ffff !important;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.tabela-eventos thead input::placeholder {
+  color: #ccc; 
+}
+
+.tabela-eventos thead th {
+  vertical-align: bottom;
+  color: #ffffff;
+  font-weight: bold;
 }
